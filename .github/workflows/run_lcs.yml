@@ -85,6 +85,13 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -e .
           python -m pip install -r requirements.txt
+      - name: Repair native DOP853 library and run preflight
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq patchelf
+          python scripts/repair_native_runtime.py
       - name: Analyze ocean / create outputs
         shell: bash
         run: |
